@@ -1,0 +1,91 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <h1><b><%=listing.title  %></b></h1>
+    </div>
+    <br>
+    <br>
+    <div class="col-8 offset-2">
+        <div class="card">
+            <img src="<%=listing.image%>" class="card-img-top show-img" alt="">
+            <div class="card-body">
+                <p class="card-text">
+                    <i>by <%= listing.owner.username %></i>
+                    <br>
+                    <%= listing.description %>
+                    <br>
+                    <h5>&#8377;<%= listing.price.toLocaleString("en-IN") %></h5>
+                    <br>
+                    <i><%= listing.location %></i>
+                    <br>
+                    <br>
+                    <i><%= listing.country %></i>
+                </p>
+            </div>
+        </div>
+    </div>
+    <% if(currUser && listing.owner._id.equals(currUser._id)) {%>
+        <div class="btns col-8 offset-2 d-flex">
+            <a class="btn btn-outline-dark mx-3" href="/listings/<%= listing._id %>/edit">Edit</a>
+            
+            <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
+                <button type="submit" class="btn btn-outline-danger">DELETE</button>
+            </form>
+        </div>
+    <% } %>
+    <div class="col-8 offset-2">
+        <hr>
+        <h4>All Reviews</h4><br>
+        <div class="row">
+            <% for (review of listing.reviews){ %>
+                <div class="col-5 mb-3 ms- 3">
+                    <div class="border rounded border-secondary px-3 py-2">
+                        <h6><b><%=review.author.username%></b></h6>
+                        <% let y = review.rating %>
+                        <% 
+                        let x = ""
+                        for(let i = 0 ;i<y;i++){
+                            x+="⭐"
+                        }
+                         %>
+                        <p><%=x%>  </p>
+                        <p><%= review.comment %></p>
+                        <% if(currUser && currUser._id.equals(review.author._id)) {%>
+                        <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                            <button class="btn btn-sm btn-outline-danger"> Delete</button>
+                        </form>
+                        <% } %>
+                    </div>
+                </div>
+                <br>
+            <% } %>
+        </div>
+        
+    </div>
+
+
+    <div class="col-8 offset-2">
+        <hr>
+        <% if(currUser){ %>
+        <h4>Leave a Review</h4>
+        <form novalidate class="needs-validation" action="/listings/<%=listing.id%>/reviews" method="POST">
+            <div class="my-3">
+                <label for="rating" class="form-label">Rating</label>
+                <p>Slide it! [0-5]</p>
+                <input class="form-range" type="range" min="0" max="5" name="review[rating]" id="rating">
+            </div>
+            <div class="my-3">
+                <label class="form-label" for="comment">Comments</label>
+                <textarea required class="form-control" name="review[comment]" id="comment" cols="30" rows="5"></textarea>
+                <div class="invalid-feedback">
+                    Comments can't be empty!
+                </div>
+            </div>
+            
+            <br>
+            <button class="btn btn-outline-primary">Submit </button>
+        </form>
+        <% } %>
+    </div>
+    <br>
+</div>

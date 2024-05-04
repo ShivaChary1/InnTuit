@@ -1,0 +1,45 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<body>
+    <br>
+    <br>
+    <h2>Create a new listing</h2>
+    <form method="POST" class="needs-validation" action="/listings" enctype="multipart/form-data" novalidate>
+        <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input required class="form-control" type="text" id="title" name="listing[title]">
+            <div class="invalid-feedback">Enter a Title</div>
+            <div class="valid-feedback">Looks Good</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="desc">Description</label>
+            <textarea required class="form-control" name="listing[description]" id="desc"></textarea>
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Enter a Description</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="img">Image URL</label>
+            <input class="form-control" type="text" name="listing[image]" id="img">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="price">Price</label>
+            <input required class="form-control" name="listing[price]" id="price">
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Enter a Price</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="country">Country</label>
+            <input required class="form-control" type="text" name="listing[country]" id="country">
+            <div class="invalid-feedback">Enter a Country</div>
+            <div class="valid-feedback">Looks Good</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="location">Location</label>
+            <input required class="form-control" type="text" name="listing[location]" id="location">
+            <div class="invalid-feedback">Enter a Location</div>
+            <div class="valid-feedback">Looks Good</div>
+        </div>
+        <button class="btn btn-outline-danger">ADD</button>
+    </form>
+    <br>
+    <br><br>
+</body>

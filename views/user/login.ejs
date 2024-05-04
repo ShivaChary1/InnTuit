@@ -1,0 +1,22 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+    <h3 class="col-6 offset-3">LogIn to AirBnb</h3>
+    <div class="col-6 offset-3">
+        <form method="post" action="/login" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="username">Username</label>
+                <input required class="form-control" type="text" id="username" name="username">
+                <div class="invalid-feedback">Enter a Urername</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Password</label>
+                <input required class="form-control" type="password" id="password" name="password">
+                <div class="invalid-feedback">Enter password</div>
+            </div>
+            <button class="btn btn-outline-success">LogIn</button>&nbsp;
+            <span>don't have an account?</span>&nbsp;<a style="text-decoration: none;" href="/signup">signup</a>
+        </form>
+    </div>
+</div>
