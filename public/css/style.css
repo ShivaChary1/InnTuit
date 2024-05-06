@@ -102,3 +102,8 @@ body {
 .nav-box-style:hover{
     border: #040404 !important;
 }
+
+#map{
+    height: 400px;
+    width: 50vw;
+}

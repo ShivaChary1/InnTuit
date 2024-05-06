@@ -6,6 +6,7 @@ const path = require("path");
 const ExpressError = require("./utils/ExpressError.js")
 const ejsMate = require("ejs-mate");
 const session = require("express-session")
+const MongoStore = require("connect-mongo")
 const flash  = require("connect-flash")
 const passport = require("passport")
 const localStrategy = require("passport-local")
@@ -17,16 +18,28 @@ const reviewRouter = require("./routes/review.js")
 const userRouter = require("./routes/user.js")
 
 
-
+const dbUrl = "mongodb+srv://shivacharyul:WzV2dSsQ9AjASSBT@cluster0.kk1byb9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 const mongoUrl = "mongodb://127.0.0.1:27017/wanderlust";
 let main = async ()=>{
-    await mongoose.connect(mongoUrl)
+    await mongoose.connect(dbUrl)
 }
-
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"))
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto:{
+        secret: "mysupersecretcode"
+    },
+    touchAfter : 24 * 3600,
+})
+store.on("error",()=>{
+    console.log("")
+})
+
 const sessionOptions = {
+    store,
     secret : "mysupersecretcode",
     resave: false,
     saveUninitialized : true,
@@ -36,6 +49,10 @@ const sessionOptions = {
         httpOnlu : true
     }
 }
+
+
+
+
 app.use(session(sessionOptions))
 app.use(flash())
 app.use(passport.initialize())
